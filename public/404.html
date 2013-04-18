@@ -5,22 +5,32 @@
   <style type="text/css">
     body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
     div.dialog {
-      width: 25em;
+      width: 45em;
       padding: 0 4em;
       margin: 4em auto 0 auto;
       border: 1px solid #ccc;
       border-right-color: #999;
       border-bottom-color: #999;
+	  -webkit-border-radius: 6px;
+	  -moz-border-radius: 6px;
+	  border-radius: 6px;
     }
-    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+	h1 {
+	  letter-spacing: 3px;
+	  margin-bottom: 20px;
+	  text-align: center;
+		font-size:30px;
+		text-shadow: 2px 2px 2px lightgray;
+	}
   </style>
 </head>
 
 <body>
   <!-- This file lives in public/404.html -->
   <div class="dialog">
-    <h1>The page you were looking for doesn't exist.</h1>
-    <p>You may have mistyped the address or the page may have moved.</p>
+    <h1>Oh dang it! The page you were looking for doesn't exist.</h1>
+    <p>Maybe you mistyped the address? Or maybe the page may have moved?<br>
+	Please <a href="mailto:spierp@hdcco.com">notify the site admin</a></p>
   </div>
 </body>
 </html>
