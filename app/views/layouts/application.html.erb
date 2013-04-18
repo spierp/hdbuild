@@ -1,14 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Hdbuild</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<link type="text/css" rel="stylesheet" href="https://fast.fonts.com/cssapi/96aa841b-f394-4873-b311-7d94a25b1a66.css"/>
+	<head>
+	  <title><%= full_title(yield(:title)) %></title>
+	  <%= stylesheet_link_tag    "application", media: "all" %>
+	  <%= javascript_include_tag "application" %>
+	
 
-<%= yield %>
-
-</body>
+		
+	  <%= csrf_meta_tags %>
+	
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+		<meta name="description" content="Hathaway Dinwiddie Special Projects Group - Build System.">
+		<meta name="keywords" content="general contractor, contractor, construction, bid, bids, bidding, software, cloud">
+	
+	  <%= render 'layouts/shim' %>
+	</head>
+	<body>
+		<%= render 'layouts/header' %>
+		<div class="container-fluid">
+			<% flash.each do |key, value| %>
+				<%= content_tag(:div, value, class: "alert alert-#{key}") %>
+			<% end %>			
+	  		<%= yield %>
+			<%= render 'layouts/footer' %>
+			<%= debug(params) if Rails.env.development? %>
+		</div>
+	</body>
 </html>

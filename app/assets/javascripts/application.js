@@ -12,4 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
+//= require bootstrap-datepicker
+//= require jquery-fileupload/basic
+//= require jquery-fileupload/vendor/tmpl
+//= require dataTables/jquery.dataTables
+//= require dataTables/jquery.dataTables.bootstrap
+//= require zero-clipboard
+//= require spin
 //= require_tree .
+
