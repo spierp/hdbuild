@@ -1,0 +1,52 @@
+<% provide(:title, @project.name) %>
+
+<h2><%= @project.name %></h2>
+
+<div class="tabbable">
+   <ul class="nav nav-tabs">
+     <li class="active"><a href="#tab1" data-toggle="tab"><strong style="font-size:16px"><i class="icon-home"></i> Overview</strong></a></li>
+     <li><a href="#tab2" data-toggle="tab"><strong style="font-size:16px"><i class="icon-calendar"></i> Schedule</strong></a></li>
+     <li><a href="#tab3" data-toggle="tab"><strong style="font-size:16px"><i class="icon-laptop"></i> Model</strong></a></li>
+     <li><a href="#tab4" data-toggle="tab"><strong style="font-size:16px"><i class="icon-file"></i> Drawings</strong></a></li>
+     <li><a href="#tab5" data-toggle="tab"><strong style="font-size:16px"><i class="icon-building"></i> Site</strong></a></li>
+     <li><a href="#tab6" data-toggle="tab"><strong style="font-size:16px"><i class="icon-bar-chart"></i> Estimate</strong></a></li>
+     <li><a href="#tab7" data-toggle="tab"><strong style="font-size:16px"><i class="icon-truck"></i> Procurement</strong></a></li>
+     <li><a href="#tab8" data-toggle="tab"><strong style="font-size:16px"><i class="icon-exchange"></i> Submittals</strong></a></li>
+     <li><a href="#tab9" data-toggle="tab"><strong style="font-size:16px"><i class="icon-lightbulb"></i> RFIs</strong></a></li>
+     <li><a href="#tab10" data-toggle="tab"><strong style="font-size:16px"><i class="icon-warning-sign"></i> PCOs</strong></a></li>
+
+   </ul>
+   <div class="tab-content">
+       <div id="tab1" class="tab-pane active">
+			<%= render 'overview' %>
+		</div>
+       <div id="tab2" class="tab-pane">
+			<%= render 'schedule' %>	
+	   </div>
+       <div id="tab3" class="tab-pane">
+			<%= render 'model' %>	
+	   </div>
+       <div id="tab4" class="tab-pane">
+			<%= render 'drawings' %>
+	   </div>
+       <div id="tab5" class="tab-pane">
+			<%= render 'site' %>	
+	   </div>
+       <div id="tab6" class="tab-pane">
+			<%= render 'estimate' %>	
+	   </div>
+       <div id="tab7" class="tab-pane">
+			<%= render 'procurement' %>		
+	   </div>
+       <div id="tab8" class="tab-pane">
+			<%= render 'submittals' %>		
+	   </div>
+       <div id="tab9" class="tab-pane">
+			<%= render 'rfis' %>	
+	   </div>
+       <div id="tab10" class="tab-pane">
+			<%= render 'pcos' %>		
+	   </div>								       	
+   </div>
+</div>
+

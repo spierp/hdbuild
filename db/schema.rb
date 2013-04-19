@@ -11,16 +11,46 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130418231159) do
+ActiveRecord::Schema.define(:version => 20130419215957) do
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.string   "role"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "owner"
+  end
+
+  create_table "milestones", :force => true do |t|
+    t.integer  "project_id"
+    t.string   "name"
+    t.date     "date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.string   "address"
     t.string   "project_number"
     t.integer  "owner_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+    t.string   "slug"
+    t.string   "location"
+    t.text     "description"
+    t.datetime "issue_bid_docs"
+    t.float    "longitude"
+    t.float    "latitude"
+    t.string   "privatelink"
+    t.date     "submit_contract_amount"
+    t.date     "contract_award"
+    t.date     "construction_start"
+    t.date     "construction_finish"
   end
+
+  add_index "projects", ["slug"], :name => "index_projects_on_slug"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

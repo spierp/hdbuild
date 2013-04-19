@@ -2,9 +2,24 @@ Hdbuild::Application.routes.draw do
   
   devise_for :users
 
-  resources :projects
+  match '/about', to: 'static_pages#about'
   
-  root :to => 'static_pages#home'
+  resources :projects, path: "" do
+    member do
+      get 'edit_schedule'
+      get 'edit_model'      
+      get 'edit_drawings'
+      get 'zip_drawings'
+      get 'edit_site'
+      get 'edit_estimate'
+      get 'edit_procurement'
+      get 'edit_submittals'     
+      get 'edit_rfis'     
+      get 'edit_pcos'                                        
+    end
+  end
+  
+  root :to => 'projects#index'
 
 
   # The priority is based upon order of creation:

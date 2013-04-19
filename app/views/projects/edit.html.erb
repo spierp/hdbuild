@@ -42,22 +42,7 @@
 	<hr>
 
 	<h3 style="text-align:center">Team Members</h3>
-	
-	<%= f.fields_for :memberships do |builder| %>
-		<div class="fields">
-			<div class="row-fluid" style="padding-top:10px">
-				<div class="span6">
-					<%= builder.label :user_id, "Name" %>
-					<%= builder.text_field :user_id, :value => current_user.combined_name, :readonly => true %>
-					<%= builder.hidden_field :user_id, :value => current_user.id %>
-				</div>
-				<div class="span6">
-					<%= builder.label :role, "Role" %> <%= builder.text_field :role %>
-				</div>
-			</div>
-		</div>
-	<% end %>
-	
+		
 	<%= f.fields_for :memberships do |builder| %>
 		<%= render "membership_fields", :f => builder %>
 	<% end %>
@@ -73,7 +58,7 @@
 		    </div>
 		</div>
 		<%= button_tag(type: 'submit', class: "btn btn-large btn-primary right", :id => "submitbtn", style: "margin-top:0px") do %>
-		 <i class="icon-magic icon-white"></i> Create Project
+		 <i class="icon-edit icon-white"></i> Edit Project
 		<% end %>
 		<% end %>	
 	<br>

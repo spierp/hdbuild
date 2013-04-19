@@ -12,7 +12,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :phone, :image, :combined_name, :admin
   # attr_accessible :title, :body
   
-  
+  has_many :memberships, :dependent => :destroy
+  has_many :projects, :through => :memberships
+  has_many :roles, :through => :memberships
   
   before_save :combined_name
   

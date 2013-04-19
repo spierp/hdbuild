@@ -1,0 +1,31 @@
+<div id="calendar_block">
+	<div class="span6">	
+	<h3 id="month" style="text-align:center;margin-bottom:5px">
+	  <%= link_to '<i class="icon-circle-arrow-left"></i>'.html_safe, date: @date.prev_month, remote: true %>
+	  <%= @date.strftime("%B %Y") %>
+	  <%= link_to '<i class="icon-circle-arrow-right"></i>'.html_safe, date: @date.next_month, remote: true %>
+	</h3>
+		<%= calendar @date do |date| %>
+		    <%= date.day %>
+
+		    	<% if Date.today == date %>
+					<div class="todaytext">
+			          	<h4 style="text-align:center;margin-bottom:2px;color:#333333;font-size:10px">Today</h4>
+					</div>	
+			    <% end %>
+
+			    <% if @project.construction_start == date %>
+					<div class="rfi">
+			          	<h3 style="text-align:center;margin-bottom:2px;color:#333333;font-size:13px">Start Const.</h3>
+					</div>
+			    <% end %>
+			
+			    <% if @project.construction_finish == date %>
+					<div class="rfi">
+			          	<h3 style="text-align:center;margin-bottom:2px;color:#333333;font-size:13px">Finish Const.</h3>
+					</div>
+			    <% end %>			
+
+		<% end %>
+	</div>
+</div>

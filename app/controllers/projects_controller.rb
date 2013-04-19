@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
   def new
     if user_signed_in?
     @project = Project.new
+    1.times { @project.memberships.build }     
     @users = User.order_by('first_name ASC').collect {|x| [x.combined_name, x.id] }
     else
     redirect_to root_path
@@ -19,7 +20,7 @@ class ProjectsController < ApplicationController
   end
   
   def show
-    @project = Project.find(params[:id])
+    @project = Project.find_by_slug!(params[:id])
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
   end
     
@@ -52,8 +53,8 @@ class ProjectsController < ApplicationController
 # end
   
   def create
-    @project = current_user.projects.build(params[:project])
-    if @bid.save
+    @project = Project.create(params[:project])
+    if @project.save
       flash[:success] = "Project Created! Now Add Documents"
       redirect_to @project
     else    
@@ -63,7 +64,7 @@ class ProjectsController < ApplicationController
 
   def edit
 #    if current_user 
-        @project = Project.find(params[:id])
+        @project = Project.find_by_slug!(params[:id])
         @users = User.order_by('first_name ASC').collect {|x| [x.combined_name, x.id] }
 #    else
 #      redirect_to @bid
@@ -71,7 +72,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @project = Project.find(params[:id])
+    @project = Project.find_by_slug!(params[:id])
     if @project.update_attributes(params[:project])
       flash[:success] = "Project Updated"
       redirect_to @project
@@ -81,11 +82,45 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = Project.find(params[:id]).destroy
+    @project = Project.find_by_slug!(params[:id]).destroy
     flash[:success] = "Project deleted"
     redirect_to projects_path
   end
   
+  def edit_schedule
+    @project = Project.find_by_slug!(params[:id])
+  end
 
+  def edit_model
+    @project = Project.find_by_slug!(params[:id])
+  end
+    
+  def edit_drawings
+    @project = Project.find_by_slug!(params[:id])
+  end
+
+  def edit_site
+    @project = Project.find_by_slug!(params[:id])
+  end
+
+  def edit_estimate
+    @project = Project.find_by_slug!(params[:id])
+  end
+
+  def edit_procurement
+    @project = Project.find_by_slug!(params[:id])
+  end
+
+  def edit_submittals
+    @project = Project.find_by_slug!(params[:id])
+  end
+
+  def edit_rfis
+    @project = Project.find_by_slug!(params[:id])
+  end  
   
+  def edit_pcos
+    @project = Project.find_by_slug!(params[:id])
+  end  
+            
 end

@@ -1,0 +1,12 @@
+<div class="row-fluid">
+	<div class="span12">
+		<div class="span4">
+			<%= link_to image_tag("https://maps.google.com/maps/api/staticmap?size=325x250&sensor=false&zoom=16&markers=#{@project.latitude}%2C#{@project.longitude}", :style => "padding:1px;background:lightgray;float:right"), "http://maps.google.com/?q=#{@project.address}", :target => "_blank" %>
+		</div>
+		<div class="span8">
+			<h1 style="text-align:left; margin-top:0px; padding-top:0px"><%= @project.name %></h1>
+			  <h2 style="text-align:left;margin-bottom:0px;padding-bottom:0px"><%= @project.location %></h2><br>
+			  <h3 style="margin-top:0px;padding-top:0px"><%= link_to @project.address, "http://maps.google.com/?q=#{@project.address}" %></h3>	
+		</div>
+	</div>
+</div>

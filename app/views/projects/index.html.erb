@@ -1,0 +1,105 @@
+<% provide(:title, 'Projects') %>
+
+<% if @user.projects.empty? %>
+<div class="hero-unit" style="text-align:center">
+  <h1 style="font-size:70px;"><%= image_tag(current_user.image_url(:medium), :width => 100, :height => 100, :style => "background:lightgray; padding:2px").to_s %> Howdy <%= current_user.first_name %>!</h1>
+	<hr>
+  <p style="text-align:center; font-size:25px">It looks like you don't have any active projects.</p>
+  <p><%= link_to raw("<i class=\"icon-pencil icon-white\"></i> Create new bid!"), 
+          new_project_path, 
+          class: "btn btn-large btn-primary",
+          method: :get %></p>
+</div>
+<% else %>
+<h2><%= image_tag(current_user.image_url(:tiny), :width => 60, :height => 60, :style => "background:lightgray; padding:2px").to_s %> My Bids</h2>
+<table class="table table-striped" id="bids">
+	<thead>
+		<tr>
+		<th>Name</th>
+		<th>Date Modified</th>
+		<th>Delete</th>		
+		</tr>
+	</thead>
+	<% for project in @user.projects %>
+	<tr>
+	<td><strong><span style="color:gray"><i class="icon-folder-close-alt"></i></span> <%= link_to project.name, project %></strong></td>
+	<td><%= project.updated_at.strftime("%m/%d/%Y %I:%m %p") %></td>
+	<td><%= link_to "Delete", project, method: :delete,
+								confirm: "Are you sure you want to delete this bid and all associated files?", 
+								title: project.name %></td>		
+	<% end %>
+	</tr>	
+</table>
+<% end %>
+
+
+<% if current_user.admin? %>
+<h2>All Bids</h2>
+<table class="table table-striped" id="allbids">
+	<thead>
+		<tr>
+		<th>Name</th>
+		<th>Creator</th>
+		<th>Date Added</th>
+		<th>Delete</th>		
+		</tr>
+	</thead>
+	<% for project in @projects %>
+	<tr>
+	<td><strong><span style="color:gray"><i class="icon-folder-close-alt"></i></span> <%= link_to project.name, project %></strong></td>
+	<td>
+		<% for user in project.users %>
+			<% for membership in user.memberships %>
+			<%= membership.owner if membership.bid_id == project.id %>
+			<% end %>											
+		<% end %>
+	</td>	
+	<td><%= project.created_at.strftime("%m/%d/%Y %I:%m %p") %></td>
+	<td><%= link_to "Delete", project, method: :delete,
+								confirm: "Are you sure you want to delete this bid and all associated files?", 
+								title: project.name %></td>		
+	<% end %>
+	</tr>	
+</table>
+<h2><%= link_to "All Users", users_path %></h2>
+<% else %>
+<% end %>
+
+<script type="text/javascript">		
+$(document).ready(function() {
+   var oTable = $('#allbids').dataTable( {
+	    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+		"bLengthChange": false,
+		"bFilter": false,
+		"bInfo": false,			
+		"aaSorting": [[ 2, "desc" ]],			
+	    "bPaginate": false,
+		"iDisplayLength": 100,
+		"aoColumns": [
+	                null,
+					null,
+					{ "sType": "datetime-us" },																
+					null
+	            ]
+        } );
+    } );
+</script>
+
+<script type="text/javascript">		
+$(document).ready(function() {
+   var oTable = $('#bids').dataTable( {
+	    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+		"bLengthChange": false,
+		"bFilter": false,
+		"bInfo": false,			
+		"aaSorting": [[ 1, "desc" ]],			
+	    "bPaginate": false,
+		"iDisplayLength": 100,
+		"aoColumns": [
+	                null,																			
+					{ "sType": "datetime-us" },																
+					null
+	            ]
+        } );
+    } );
+</script>
