@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
 
   attr_accessible :address, :name, :owner_id, :project_number, :location, :longitude, :latitude, :description, :construction_start, 
-  :construction_finish, :memberships_attributes, :milestones_attributes, :owner, :slug, :privatelink
+  :construction_finish, :memberships_attributes, :milestones_attributes, :owner, :slug, :privatelink, :issue_bid_docs, :submit_contract_amount, :contract_award
 
   def to_param
     slug

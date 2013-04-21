@@ -7,63 +7,82 @@
 
 <div class="well" style="width:960px;margin: 0px auto">
 	<div class="row-fluid">
-		<div class="span12">
 			<div class="span6">	
-    			<%= f.label :name, "Name (required)"%><br />
-    			<%= f.text_field :name, :style => "width:400px;border-color:red;"  %> <br />
-				<%= f.label :address, "Street Address (required)" %> <br />
-			    <%= f.text_field :address, :style => "width:400px;border-color:red;" %> <br />
-				<%= f.label :location, "Floor(s), suite number, etc..." %> <br />
-			    <%= f.text_field :location, :style => "width:400px"  %> <br />
+			    <%= f.label :issue_bid_docs, "Issue Bid Documents" %> <br />
+			    <%= f.text_field :issue_bid_docs, :style => "width:135px" %>
 			</div>
 			<div class="span6">
-				<%= f.label :description  %><br>
-				<%= f.text_area :description, :size => "40x5", :style => "width:400px" %>
-				<p class="muted">Architectural features, project challenges, site logistics, schedule requirements, etc...</p>
+			    <%= f.label :submit_contract_amount, "Submit Contract Amount" %> <br />
+			    <%= f.text_field :submit_contract_amount, :style => "width:135px" %>
+			</div>		
+	</div>		
+	<hr>	
+	<div class="row-fluid">
+			<div class="span6">	
+			    <%= f.label :contract_award, "Notice to Proceed" %> <br />
+			    <%= f.text_field :contract_award, :style => "width:135px" %>
 			</div>
-		</div>
-	</div>			
-
-	<div class="fields">
-		<div class="row-fluid">
-			<div class="span12">
-				<div class="span6">	
-				    <%= f.label :construction_start, "Construction Start" %> <br />
-				    <%= f.text_field :construction_start, :style => "width:135px" %>
-				</div>
-				<div class="span6">
-					<%= f.label :construction_finish %> <br />
-				    <%= f.text_field :construction_finish, :style => "width:135px" %>
-				</div>
-			</div>
-		</div>
+			<div class="span6">
+			    <%= f.label :construction_start, "Construction Start" %> <br />
+			    <%= f.text_field :construction_start, :style => "width:135px" %>
+			</div>		
 	</div>
-
 	<hr>
+	<div class="row-fluid">
+			<div class="span6">	
+			    <%= f.label :construction_finish, "Construction Finish" %> <br />
+			    <%= f.text_field :construction_finish, :style => "width:135px" %>
+			</div>
+			<div class="span6">
 
-	<h3 style="text-align:center">Team Members</h3>
-		
-	<%= f.fields_for :memberships do |builder| %>
-		<%= render "membership_fields", :f => builder %>
+			</div>		
+	</div>	
+	<hr>
+	
+	<%= f.fields_for :milestones do |builder| %>
+		<%= render "milestone_fields", :f => builder %>
 	<% end %>
-	<h3 style="text-align:center"><strong><%= link_to_add_fields raw("<i class='icon-plus'></i> Add Team Member"), f, :memberships %></strong></h3>
-	<hr>
-	<br>
+	<h3 style="text-align:center"><strong><%= link_to_add_fields raw("<i class='icon-plus'></i> Add Milestone"), f, :milestones %></strong></h3>
+
 	<div class="row-fluid">
 		<div id="loading">
 		    <div id="loadingcontent">
 		        <p id="loadingspinner">
-		            Updating Project...
+		            Updating Schedule...
 		        </p>
 		    </div>
 		</div>
 		<%= button_tag(type: 'submit', class: "btn btn-large btn-primary right", :id => "submitbtn", style: "margin-top:0px") do %>
-		 <i class="icon-edit icon-white"></i> Update Project
+		 <i class="icon-edit icon-white"></i> Update Schedule
 		<% end %>
 		<% end %>	
 	<br>
 	</div>
 </div>
+
+<script type="text/javascript">	
+	$("[id~='project_issue_bid_docs']").datepicker({
+		"format": "yyyy-mm-dd",
+	    "weekStart": 1,
+	    "autoclose": true
+	});	
+</script>
+
+<script type="text/javascript">	
+	$("[id~='project_submit_contract_amount']").datepicker({
+		"format": "yyyy-mm-dd",
+	    "weekStart": 1,
+	    "autoclose": true
+	});	
+</script>
+
+<script type="text/javascript">	
+	$("[id~='project_contract_award']").datepicker({
+		"format": "yyyy-mm-dd",
+	    "weekStart": 1,
+	    "autoclose": true
+	});	
+</script>
 
 <script type="text/javascript">	
 	$("[id~='project_construction_start']").datepicker({

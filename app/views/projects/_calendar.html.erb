@@ -1,6 +1,6 @@
 <div id="calendar_block">
-	<div class="span6">	
-	<h3 id="month" style="text-align:center;margin-bottom:5px">
+	<h3 style="text-align:center;padding:10px;background:#FFEBCC; border:1px solid #999;border-bottom:none;font-size:20px">Milestones</h3>		
+	<h3 id="month" style="text-align:center;padding-bottom:5px;padding-top:5px; border:1px solid #999;border-bottom:none;background:#E8E8E8">
 	  <%= link_to '<i class="icon-circle-arrow-left"></i>'.html_safe, date: @date.prev_month, remote: true %>
 	  <%= @date.strftime("%B %Y") %>
 	  <%= link_to '<i class="icon-circle-arrow-right"></i>'.html_safe, date: @date.next_month, remote: true %>
@@ -14,18 +14,43 @@
 					</div>	
 			    <% end %>
 
-			    <% if @project.construction_start == date %>
+			    <% if @project.issue_bid_docs == date %>
 					<div class="rfi">
-			          	<h3 style="text-align:center;margin-bottom:2px;color:#333333;font-size:13px">Start Const.</h3>
+			          	<h3 style="text-align:center;margin-bottom:2px;color:#333333;font-size:13px">Issue Bid Docs</h3>
 					</div>
 			    <% end %>
-			
+		
+			    <% if @project.submit_contract_amount == date %>
+					<div class="rfi">
+			          	<h3 style="text-align:center;margin-bottom:2px;color:#333333;font-size:13px">Submit Contract Amount</h3>
+					</div>
+			    <% end %>
+
+			    <% if @project.contract_award == date %>
+					<div class="rfi">
+			          	<h3 style="text-align:center;margin-bottom:2px;color:red;font-size:13px">Notice To Proceed</h3>
+					</div>
+			    <% end %>								
+		
+			    <% if @project.construction_start == date %>
+					<div class="rfi">
+			          	<h3 style="text-align:center;margin-bottom:2px;color:#333333;font-size:13px">Start Construction</h3>
+					</div>
+			    <% end %>
+	
 			    <% if @project.construction_finish == date %>
 					<div class="rfi">
-			          	<h3 style="text-align:center;margin-bottom:2px;color:#333333;font-size:13px">Finish Const.</h3>
+			          	<h3 style="text-align:center;margin-bottom:2px;color:green;font-size:13px">Substantial Completion</h3>
 					</div>
-			    <% end %>			
+			    <% end %>
+	
+				<% for milestone in @project.milestones %>
+				    <% if milestone.date == date %>
+						<div class="rfi">
+				          	<h3 style="text-align:center;margin-bottom:2px;color:#333333;font-size:13px"><%= milestone.name %></h3>
+						</div>
+				    <% end %>
+				<% end %>					
 
 		<% end %>
-	</div>
 </div>
