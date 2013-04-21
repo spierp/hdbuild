@@ -8,6 +8,7 @@ Hdbuild::Application.routes.draw do
   
   resources :projects, path: "" do
     member do
+      get 'reset_privatelink'
       get 'edit_schedule'
       get 'edit_model'      
       get 'edit_drawings'

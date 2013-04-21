@@ -87,10 +87,19 @@ class ProjectsController < ApplicationController
     flash[:success] = "Project deleted"
     redirect_to projects_path
   end
+
+  def reset_privatelink
+    @project = Project.find_by_slug!(params[:id])
+    @project.privatelink = SecureRandom.urlsafe_base64(n = 3)
+    @project.update_attributes(params[:project])
+      flash[:success] = "Privatelink Reset"
+      redirect_to @project
+  end
   
   def edit_schedule
     @project = Project.find_by_slug!(params[:id])
-    @documents = Document.new    
+    @documents = Document.new
+    @schedule_docs = Document.where("document_category = 'schedule'")    
   end
 
   def edit_model
