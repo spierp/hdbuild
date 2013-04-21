@@ -1,7 +1,50 @@
 <div class="row-fluid">
-	<div class="span12">
+	<div class="span12" style="border: 1px solid #999">
 		<%= render 'calendar' %>
-		<div class="span6">
-		</div>
 	</div>
 </div>
+<hr>
+<div class="row-fluid">
+	<table class="table table-striped" id="documents-table">
+		<thead>
+			<tr>
+			<th>Documents</th>
+			<th>File Size</th>
+			<th>Dated added</th>		
+			</tr>
+		</thead>
+		<% for document in @schedule_docs %>
+		<tr>
+		<td><strong>
+		<%= link_to image_tag(extension_image(document.project_doc_url), :size => "32x32"), document.project_doc_url %>
+		<%# if document.content_type.include? 'application/pdf' %>
+			<%#= link_to image_tag(document.bid_doc_url(:thumb), :style => "border:1px solid gray"), document.bid_doc_url %>	
+		<%# end %>		
+		<%= link_to File.basename(document.project_doc_url), document.project_doc_url %>
+			</strong></td>
+		<td><%= number_to_human_size(document.file_size) %></td>
+		<td><%= document.created_at.strftime("%m/%d/%Y %I:%m %p") %></td>	
+		<% end %>
+		</tr>	
+	</table>
+</div>
+
+<script type="text/javascript">		
+$(document).ready(function() {
+   var oTable = $('#documents-table').dataTable( {
+	    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",		
+		"aaSorting": [[ 2, "desc" ]],			
+		"bLengthChange": false,
+		"bFilter": false,
+		"bInfo": false,			
+		"aaSorting": [[ 2, "desc" ]],			
+	    "bPaginate": false,
+		"iDisplayLength": 100,
+		"aoColumns": [
+	                null,																			
+					{ "sType": "file-size" },																
+					{ "sType": "datetime-us" }
+	            ]
+        } );
+    } );
+</script>

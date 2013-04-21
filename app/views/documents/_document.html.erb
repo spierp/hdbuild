@@ -1,0 +1,5 @@
+<tr>
+<td><%= link_to File.basename(document.project_doc_url), document.project_doc_url %></td>
+<td><%= number_to_human_size(document.file_size) %></td>
+<td><%= document.created_at.strftime("%m/%d/%Y %I:%m %p") %></td>
+</tr>

@@ -1,6 +1,6 @@
 <% provide(:title, 'New Project') %>
 
-<h2>Create New Project</h2>
+<h2><i class="icon-calendar"></i> Edit Schedule</h2>
 
 <%= form_for @project do |f| %>
   <%= render 'shared/error_messages', object: @project %>	
@@ -43,7 +43,10 @@
 		<%= render "milestone_fields", :f => builder %>
 	<% end %>
 	<h3 style="text-align:center"><strong><%= link_to_add_fields raw("<i class='icon-plus'></i> Add Milestone"), f, :milestones %></strong></h3>
-
+	<%= button_tag(type: 'submit', class: "btn btn-large btn-primary right", :id => "submitbtn", style: "margin-top:0px") do %>
+	 <i class="icon-edit icon-white"></i> Update Schedule
+	<% end %>
+	<% end %>
 	<div class="row-fluid">
 		<div id="loading">
 		    <div id="loadingcontent">
@@ -51,15 +54,79 @@
 		            Updating Schedule...
 		        </p>
 		    </div>
-		</div>
-		<%= button_tag(type: 'submit', class: "btn btn-large btn-primary right", :id => "submitbtn", style: "margin-top:0px") do %>
-		 <i class="icon-edit icon-white"></i> Update Schedule
-		<% end %>
-		<% end %>	
+		</div>	
 	<br>
 	</div>
 </div>
+<br>
+<div class="well" style="width:960px;margin: 0px auto;text-align:center">
+	<div class="row-fluid">
+		<h3 style="text-align:center;color:red"><i class="icon-file"></i> Upload Schedule Documents</h3>
+		<% if user_agent.browser == "Internet Explorer" %>
+		<div class="row-fluid">
+			<span style="font-size:20px"> It looks like you are using Internet Explorer.  Our uploader works best with <%= image_tag('chrome-icon.png', :width => "30px", :height => "30px", :style => "").to_s %> <%= link_to "Google Chrome", "http://www.google.com/chrome/", target: "_blank" %> or another <%= link_to "modern browser", "http://en.wikipedia.org/wiki/File:Usage_share_of_web_browsers_(Source_StatCounter).svg", target: "_blank" %> such as <%= link_to "Firefox", "http://www.mozilla.org/en-US/firefox/new/", target: "_blank" %> or <%= link_to "Safari", "http://www.apple.com/safari/", target: "_blank" %>.</span>
+			<br>
+			<br>	
+		</div>
+		<% end %>
+		<%= form_for Document.new do |f| %>
+		  <%= f.hidden_field :project_id, :value => @project.id %>
+		  <%= f.hidden_field :document_category, :value => "schedule" %>
+		  <%= f.file_field :project_doc, multiple: true, name: "document[project_doc]" %>
+		<% end %>
 
+		<script id="template-upload" type="text/x-tmpl">
+		<div class="upload">
+		  {%=o.name%}
+		  <div class="progress"><div class="bar" style="width: 0%"></div></div>
+		</div>
+		</script>
+		</div>
+
+		<table class="table table-striped" id="documents-table">
+			<thead>
+				<tr>
+				<th>All Documents</th>
+				<th>File Size</th>
+				<th>Dated added</th>
+				<th>Delete</th>				
+				</tr>
+			</thead>
+			<% for document in @project.documents %>
+			<tr>
+			<td><strong><%= link_to image_tag(extension_image(document.bid_doc_url), :size => "32x32"), document.bid_doc_url %> <%= link_to File.basename(document.bid_doc_url), document.bid_doc_url %></strong></td>
+			<td><%= number_to_human_size(document.file_size) %></td>
+			<td><%= document.created_at.strftime("%m/%d/%Y %I:%m %p") %></td>
+			<td><%= link_to "Delete", document, method: :delete,
+										confirm: "You sure?", 
+										title: document.name %></td>		
+			<% end %>
+			</tr>	
+		</table>
+</div>
+
+
+
+
+<script type="text/javascript">		
+$(document).ready(function() {
+   var oTable = $('#documents-table').dataTable( {
+	    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+		"bLengthChange": false,
+		"aaSorting": [[ 2, "desc" ]],			
+		"bFilter": false,
+	    "bPaginate": false,
+		"iDisplayLength": 50,
+		"aoColumns": [
+	                null,																			
+					{ "sType": "file-size" },																
+					{ "sType": "datetime-us" },
+					null
+	            ]
+        } );
+    } );
+</script>
+		
 <script type="text/javascript">	
 	$("[id~='project_issue_bid_docs']").datepicker({
 		"format": "yyyy-mm-dd",

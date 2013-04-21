@@ -22,6 +22,7 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find_by_slug!(params[:id])
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @schedule_docs = Document.where("document_category = 'schedule'")
   end
     
 #  def add_documents
@@ -89,6 +90,7 @@ class ProjectsController < ApplicationController
   
   def edit_schedule
     @project = Project.find_by_slug!(params[:id])
+    @documents = Document.new    
   end
 
   def edit_model

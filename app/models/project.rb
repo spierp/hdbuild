@@ -14,7 +14,10 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :memberships, :reject_if => lambda { |a| a[:user_id].blank? }, :allow_destroy => true
   
   has_many :milestones, :dependent => :destroy
-  accepts_nested_attributes_for :milestones, :reject_if => lambda { |a| a[:date].blank? }, :allow_destroy => true  
+  accepts_nested_attributes_for :milestones, :reject_if => lambda { |a| a[:date].blank? }, :allow_destroy => true 
+
+  has_many :documents, :dependent => :destroy
+  accepts_nested_attributes_for :documents, :reject_if => lambda { |a| a[:project_doc].blank? }, :allow_destroy => true   
   
   validates :slug, uniqueness: true, presence: true,
                   exclusion: {in: %w[users about admin]}

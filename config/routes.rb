@@ -4,6 +4,8 @@ Hdbuild::Application.routes.draw do
 
   match '/about', to: 'static_pages#about'
   
+  resources :documents
+  
   resources :projects, path: "" do
     member do
       get 'edit_schedule'

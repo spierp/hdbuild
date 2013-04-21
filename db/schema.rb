@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130419215957) do
+ActiveRecord::Schema.define(:version => 20130421224232) do
+
+  create_table "documents", :force => true do |t|
+    t.integer  "project_id"
+    t.string   "content_type"
+    t.float    "file_size"
+    t.string   "thumb"
+    t.string   "project_doc"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "document_category"
+  end
 
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
