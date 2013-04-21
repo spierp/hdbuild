@@ -22,7 +22,9 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find_by_slug!(params[:id])
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
-    @schedule_docs = Document.where("document_category = 'schedule'")
+    @schedule_docs = @project.documents.where("document_category = 'schedule'")
+    @model_docs = @project.documents.where("document_category = 'model'")    
+    @drawings_docs = @project.documents.where("document_category = 'drawings'")     
   end
     
 #  def add_documents
@@ -56,7 +58,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.create(params[:project])
     if @project.save
-      flash[:success] = "Project Created! Now Add Documents"
+      flash[:success] = "Project Created!"
       redirect_to @project
     else    
       render 'new'
@@ -99,23 +101,28 @@ class ProjectsController < ApplicationController
   def edit_schedule
     @project = Project.find_by_slug!(params[:id])
     @documents = Document.new
-    @schedule_docs = Document.where("document_category = 'schedule'")    
+    @schedule_docs = @project.documents.where("document_category = 'schedule'") 
+       
   end
 
   def edit_model
     @project = Project.find_by_slug!(params[:id])
+    @model_docs = @project.documents.where("document_category = 'model'")        
   end
     
   def edit_drawings
     @project = Project.find_by_slug!(params[:id])
+    @drawings_docs = @project.documents.where("document_category = 'drawings'")       
   end
 
   def edit_site
     @project = Project.find_by_slug!(params[:id])
+    @site_docs = @project.documents.where("document_category = 'site'")        
   end
 
   def edit_estimate
     @project = Project.find_by_slug!(params[:id])
+    @estimate_docs = @project.documents.where("document_category = 'estimate'")      
   end
 
   def edit_procurement
