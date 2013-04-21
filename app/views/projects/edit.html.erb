@@ -59,8 +59,8 @@
 		        </p>
 		    </div>
 		</div>
-		<%= link_to raw("<i class='icon-retweet icon-white'></i> Reset Privatelink"), {:controller => :projects,
-		      :action => 'reset_privatelink' }, :method => :get, :id => "downloadbutton", :class => "btn btn-small btn-danger left", :style => "letter-spacing:1px;font-size:14px" %>
+		<%= link_to raw("<i class='icon-retweet icon-white'></i> Generate New Privatelink"), {:controller => :projects,
+		      :action => 'reset_privatelink' }, :method => :get, :id => "downloadbutton", :class => "btn btn-small left", :style => "letter-spacing:1px;font-size:14px" %>
 		<%= button_tag(type: 'submit', class: "btn btn-large btn-primary right", :id => "submitbtn", style: "margin-top:0px") do %>
 		 <i class="icon-edit icon-white"></i> Update Project
 		<% end %>
