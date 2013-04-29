@@ -1,9 +1,13 @@
 <div id="calendar_block">
 	<h3 style="text-align:center;padding:10px;background:#FFEBCC; border:1px solid #999;border-bottom:none;font-size:20px">Milestones</h3>		
 	<h3 id="month" style="text-align:center;padding-bottom:5px;padding-top:5px; border:1px solid #999;border-bottom:none;background:#E8E8E8">
-	  <%= link_to '<i class="icon-circle-arrow-left"></i>'.html_safe, date: @date.prev_month, remote: true %>
-	  <%= @date.strftime("%B %Y") %>
-	  <%= link_to '<i class="icon-circle-arrow-right"></i>'.html_safe, date: @date.next_month, remote: true %>
+		<table align="center">
+	  		<tr>
+			<td><%= link_to '<i class="icon-circle-arrow-left"></i>'.html_safe, date: @date.prev_month, remote: true %></td>
+	  		<td width="160px"><%= @date.strftime("%B %Y") %><td>
+	  		<td><%= link_to '<i class="icon-circle-arrow-right"></i>'.html_safe, date: @date.next_month, remote: true %></td>
+			</tr>
+		</table>
 	</h3>
 		<%= calendar @date do |date| %>
 		    <%= date.day %>

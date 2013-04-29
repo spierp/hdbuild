@@ -1,14 +1,16 @@
 Hdbuild::Application.routes.draw do
   
-  devise_for :users
+  devise_for :users, :controllers => { :invitations => 'invitations' }
 
   match '/about', to: 'static_pages#about'
   
   resources :documents
+  resources :memberships
   
   resources :projects, path: "" do
     member do
       get 'reset_privatelink'
+      get 'edit_directory'      
       get 'edit_schedule'
       get 'edit_model'      
       get 'edit_drawings'

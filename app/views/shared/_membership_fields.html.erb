@@ -1,0 +1,7 @@
+<%= f.select :project_id, @projects %>
+<%= f.label :role %><br>
+<%= f.text_field :role %>
+<%= f.hidden_field :user_id, :value => resource.id %>
+<%= f.hidden_field :owner, :value => current_user.id %>
+
+

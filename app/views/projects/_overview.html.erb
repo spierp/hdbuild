@@ -4,9 +4,64 @@
 			<%= link_to image_tag("https://maps.google.com/maps/api/staticmap?size=325x250&sensor=false&zoom=16&markers=#{@project.latitude}%2C#{@project.longitude}", :style => "padding:1px;background:lightgray;float:right"), "http://maps.google.com/?q=#{@project.address}", :target => "_blank" %>
 		</div>
 		<div class="span8">
-			<h1 style="text-align:left; margin-top:0px; padding-top:0px"><%= @project.name %></h1>
-			  <h2 style="text-align:left;margin-bottom:0px;padding-bottom:0px"><%= @project.location %></h2><br>
-			  <h3 style="margin-top:0px;padding-top:0px"><%= link_to @project.address, "http://maps.google.com/?q=#{@project.address}" %></h3>	
+			<h2 style="text-align:left; margin-top:0px; margin-bottom:5px; padding-top:0px"><%= @project.location %></h2>
+			<h3 style="text-align:left; margin-top:0px; margin-bottom:15px; padding-top:0px"><%= link_to @project.address, "http://maps.google.com/?q=#{@project.address}" %></h3>
+			<p class="lead"><%= sanitize @project.description.html_safe, :tags => %w(br ul ol li b u i font a div), :attributes => %w(id class style color title href target) %></p>	
 		</div>
 	</div>
 </div>
+<hr>
+<div class="row-fluid">
+	<h3 style="text-align:center;margin-bottom:20px"><span style="font-size:28px;color:gray"><i class="icon-group"></i></span> Team</h3>
+	<table class="table" id="team-table">
+		<thead>
+			<tr>
+			<th>Name</th>
+			<th>Role</th>
+			<th>Company</th>			
+			<th>Email</th>
+			<th>Phone</th>						
+			</tr>
+		</thead>
+		<% for user in @project.users %>
+		<tr>
+		<td><row>
+			<% if user.image? %>	
+			<%= image_tag(user.image_url(:tiny), :width => 32, :height => 32, :style => "background:white; padding:0px; margin:0px").to_s %><strong style="margin-left:10px"><%= user.combined_name %></strong>
+			<% else %>
+			<%= image_tag('user.png', :width => 32, :height => 32, :style => "background:white; padding:0px; margin:0px").to_s %><strong style="margin-left:10px"><%= user.combined_name %></strong>
+			<% end %>
+			</row></td>
+		<td>
+			<% for membership in user.memberships %>
+			<%= membership.role if membership.project_id == @project.id %>
+			<% end %>											
+
+		</td>
+		<td><%= user.domain.capitalize %></td>		
+		<td><%= link_to user.email, "mailto:#{user.email}", :target => "_blank" %></td>
+		<td><%= number_to_phone(user.phone, :area_code => true) %></td>
+		</tr>
+		<% end %>		
+	</table>
+</div>
+
+<script type="text/javascript">		
+$(document).ready(function() {
+   var oTable = $('#team-table').dataTable( {
+	    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",		
+		"aaSorting": [[ 2, "desc" ]],			
+	    "bPaginate": false,
+		"bLengthChange": false,
+		"bFilter": false,				
+		"iDisplayLength": 50,
+		"aoColumns": [
+	                null,																			
+					null,
+					null,
+					null,																										
+					null
+	            ]
+        } );
+    } );
+</script>	

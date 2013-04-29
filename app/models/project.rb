@@ -26,6 +26,8 @@ class Project < ActiveRecord::Base
   
   before_validation :generate_slug
   before_validation :generate_privatelink  
+
+  scope :order_by, lambda { |o| {:order => o} }  
   
   geocoded_by :address
   after_validation :geocode, :if => :address_changed?

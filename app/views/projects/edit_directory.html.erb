@@ -1,0 +1,159 @@
+<% provide(:title, 'Edit Directory')%>
+
+<div class="row-fluid">
+	<h3 style="text-align:center;margin-bottom:20px"><span style="font-size:28px;color:gray"><i class="icon-group"></i></span> Project Team</h3>
+	<table class="table" id="team-table">
+		<thead>
+			<tr>
+			<th>Name</th>
+			<th>Role</th>
+			<th>Company</th>			
+			<th>Email</th>
+			<th>Phone</th>
+			<th>Remove</th>						
+			</tr>
+		</thead>
+		<% for user in @project.users %>
+		<tr>
+		<td><row>
+			<% if user.image? %>	
+			<%= image_tag(user.image_url(:tiny), :width => 32, :height => 32, :style => "background:white; padding:0px; margin:0px").to_s %><strong style="margin-left:10px"><%= user.combined_name %></strong>
+			<% else %>
+			<%= image_tag('user.png', :width => 32, :height => 32, :style => "background:white; padding:0px; margin:0px").to_s %><strong style="margin-left:10px"><%= user.combined_name %></strong>
+			<% end %>
+			</row></td>
+		<td>
+			<% for membership in user.memberships %>
+			<%= membership.role if membership.project_id == @project.id %>
+			<% end %>											
+
+		</td>
+		<td><%= user.domain.capitalize %></td>		
+		<td><%= link_to user.email, "mailto:#{user.email}", :target => "_blank" %></td>
+		<td><%= number_to_phone(user.phone, :area_code => true) %></td>
+		<td>
+		<% for membership in user.memberships %>
+			<% if membership.project_id == @project.id %>
+				<%= link_to "Remove", membership, method: :delete,
+									confirm: "You sure?", 
+									title: membership %>
+		<% end %>
+		<% end %>
+			</td>
+		</tr>
+		<% end %>		
+	</table>
+</div>
+
+<hr>
+<h3 style="text-align:center;margin-bottom:20px">Add Team Members</h3>
+
+<table class="table table-striped" id="users">
+	<thead>	
+	  <tr>
+		<th>Name</th>
+	    <th>Company</th>
+	    <th>Email</th>			
+	    <th>Add</th>
+	  </tr>
+	</thead>
+	<tbody>
+		<% for user in @outsideusers %>
+		<% if current_user.id != user.id %>
+		<% if @project.users.include?(user) %>
+		<% else %>
+		<tr>
+			<td><row>
+				<% if user.image? %>	
+				<%= image_tag(user.image_url(:tiny), :width => 32, :height => 32, :style => "background:white; padding:0px; margin:0px").to_s %><strong style="margin-left:10px"><%= user.combined_name %></strong>
+				<% else %>
+				<%= image_tag('user.png', :width => 32, :height => 32, :style => "background:white; padding:0px; margin:0px").to_s %><strong style="margin-left:10px"><%= user.combined_name %></strong>
+				<% end %>
+				</row>
+			</td>
+			<td><%= user.domain.capitalize %></td>
+			<td><%= user.email %></td>
+			<td>
+				
+
+				<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#<%= user.id %>">
+				  Add
+				</button>
+
+				<div id="<%= user.id %>" class="collapse">
+						<span style="text-align:right;float:right">
+						<%= form_for(@membership, :html => { :multipart =>true }) do |f| %>
+							<%#= render 'shared/error_messages', object: @tribe %>	
+							<%= f.label :role %>
+							<%= f.text_field :role %>
+							<%= f.hidden_field :project_id, :value => @project.id %>
+							<%= f.hidden_field :user_id, :value => user.id %>								
+
+							<div id="loading">
+							    <div id="loadingcontent">
+							        <p id="loadingspinner">
+							            Adding Team Member...
+							        </p>
+							    </div>
+							</div>
+
+							<%= f.submit "Add to Project", class: "btn btn-mini btn-success",:style => "margin:0px !important;font-size:14px !important; height:30px !important", :id => "submitbtn" %>
+
+						<% end %>
+						</div>
+					</div>
+				
+			</td>	
+		</tr>
+		<% end %>	
+		<% end %>
+		<% end %>
+	</tbody>
+</table>
+
+<hr>
+<div class="well" style="text-align:center">
+<h3 style="text-align:center;margin-bottom:20px">Don't see who you are looking for?</h3>
+<p><%= button_to "Add users to HD Build", '/users/invitation/new', class: "btn btn-primary btn-large", :method => "get" %></p>
+</div>
+
+
+<script type="text/javascript">		
+$(document).ready(function() {
+   var oTable = $('#users').dataTable( {
+	    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+		"sPaginationType": "bootstrap",	
+		"bLengthChange": false,					
+		"iDisplayLength": 10,
+		"aaSorting": [[ 0, "asc" ]],					
+		"aoColumns": [
+	                null,
+	                null,																																	
+					null,																	
+					null
+	            ]
+        } );
+    } );
+</script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#submitbtn").click(function () {
+            $("#loading").fadeIn();
+            var opts = {
+                lines: 15, // The number of lines to draw
+                length: 27, // The length of each line
+                width: 5, // The line thickness
+                radius: 20, // The radius of the inner circle
+                color: '#000', // #rgb or #rrggbb
+                speed: 1, // Rounds per second
+                trail: 60, // Afterglow percentage
+                shadow: false, // Whether to render a shadow
+                hwaccel: false // Whether to use hardware acceleration
+            };
+            var target = document.getElementById('loading');
+            var spinner = new Spinner(opts).spin(target);
+        });
+    });
+</script>

@@ -42,8 +42,6 @@
 	</div>
 	<%= f.hidden_field :owner_id, :value => "#{current_user.id}" %><br />
 	<hr>
-
-	<h3 style="text-align:center">Team Members</h3>
 	
 	<%= f.fields_for :memberships do |builder| %>
 		<div class="fields">
@@ -59,13 +57,7 @@
 			</div>
 		</div>
 	<% end %>
-	
-	<%= f.fields_for :memberships do |builder| %>
-		<%= render "membership_fields", :f => builder %>
-	<% end %>
-	<h3 style="text-align:center"><strong><%= link_to_add_fields raw("<i class='icon-plus'></i> Add Team Member"), f, :memberships %></strong></h3>
 	<hr>
-	<br>
 	<div class="row-fluid">
 		<div id="loading">
 		    <div id="loadingcontent">

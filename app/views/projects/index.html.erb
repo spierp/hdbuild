@@ -5,13 +5,13 @@
   <h1 style="font-size:70px;"><%= image_tag(current_user.image_url(:medium), :width => 100, :height => 100, :style => "background:lightgray; padding:2px").to_s %> Howdy <%= current_user.first_name %>!</h1>
 	<hr>
   <p style="text-align:center; font-size:25px">It looks like you don't have any active projects.</p>
-  <p><%= link_to raw("<i class=\"icon-pencil icon-white\"></i> Create new bid!"), 
+  <p><%= link_to raw("<i class=\"icon-pencil icon-white\"></i> Create new Project!"), 
           new_project_path, 
           class: "btn btn-large btn-primary",
           method: :get %></p>
 </div>
 <% else %>
-<h2><%= image_tag(current_user.image_url(:tiny), :width => 60, :height => 60, :style => "background:lightgray; padding:2px").to_s %> My Bids</h2>
+<h2><%= image_tag(current_user.image_url(:tiny), :width => 60, :height => 60, :style => "background:lightgray; padding:2px").to_s %> My Projects</h2>
 <table class="table table-striped" id="bids">
 	<thead>
 		<tr>

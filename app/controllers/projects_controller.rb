@@ -97,12 +97,17 @@ class ProjectsController < ApplicationController
       flash[:success] = "Privatelink Reset"
       redirect_to @project
   end
-  
+
+  def edit_directory
+    @project = Project.find_by_slug!(params[:id])
+    @outsideusers = User.where("domain != 'hdcco'")
+    @membership = Membership.new   
+  end
+    
   def edit_schedule
     @project = Project.find_by_slug!(params[:id])
     @documents = Document.new
-    @schedule_docs = @project.documents.where("document_category = 'schedule'") 
-       
+    @schedule_docs = @project.documents.where("document_category = 'schedule'")   
   end
 
   def edit_model
